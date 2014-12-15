@@ -12,4 +12,12 @@ Usage
 
 `query := qpx.NewQuery(origin, destination, startDate, endDate)`
 
-`http.Post("https://www.googleapis.com/qpxExpress/v1/trips/search?key=your_API_key_here", "application/json", query.ToJSON())`
+`resp, err := http.Post("https://www.googleapis.com/qpxExpress/v1/trips/search?key=your_API_key_here", "application/json", query.ToJSON())`
+
+`defer resp.Body.Close()`
+
+`body, err := ioutil.ReadAll(resp.body)`
+
+`r := qpx.ParseResponse(body)`
+
+`fmt.Println("%s", r.PrettyPrint())`
